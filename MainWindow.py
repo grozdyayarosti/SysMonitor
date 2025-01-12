@@ -1,25 +1,27 @@
 import tkinter as tk
 from tkinter import messagebox
+import os
+
+from SystemCalculation import SystemCalculation
+
+
+# import SystemCalculation
 
 
 class MainWindow(tk.Tk):
     def __init__(self):
         super().__init__()
-        self.title('Калькулятор индекса массы тела (ИМТ)')
-        self.geometry('400x300')
+        self.title('Системный монитор')
+        self.geometry('800x600')
         self.resizable(width=False, height=False)
 
         self.init_frame()
 
-        self.height_label = None
-        self.init_height_label()
-        self.weight_label = None
-        self.init_weight_label()
+        self.cpu_label = None
+        self.init_cpu_value_label()
 
-        self.height_tf = None
-        self.init_height_tf()
-        self.weight_tf = None
-        self.init_weight_tf()
+        self.ram_label = None
+        self.init_ram_value_label()
 
         self.init_button()
 
@@ -31,51 +33,29 @@ class MainWindow(tk.Tk):
         )
         self.frame.pack(expand=True)
 
-    def init_height_label(self):
-        self.height_label = tk.Label(
+    def init_cpu_value_label(self):
+        cpu_value = SystemCalculation().get_cpu()
+        self.cpu_label = tk.Label(
             self.frame,
-            text="Введите свой рост (в см)  "
+            text=f"CPU: {cpu_value}"
         )
-        self.height_label.grid(row=3, column=1)
+        self.cpu_label.grid(row=3, column=1)
 
-    def init_weight_label(self):
-        self.weight_label = tk.Label(
+    def init_ram_value_label(self):
+        ram_value = SystemCalculation().get_ram()
+        self.ram_label = tk.Label(
             self.frame,
-            text="Введите свой вес (в кг)  ",
+            text=f"RAM: {ram_value}"
         )
-        self.weight_label.grid(row=4, column=1)
-
-    def init_height_tf(self):
-        self.height_tf = tk.Entry(self.frame)
-        self.height_tf.grid(row=3, column=2, pady=5)
-
-    def init_weight_tf(self):
-        self.weight_tf = tk.Entry(self.frame)
-        self.weight_tf.grid(row=4, column=2, pady=5)
+        self.ram_label.grid(row=4, column=1)
 
     def init_button(self):
         cal_btn = tk.Button(
             self.frame,
             text='Рассчитать ИМТ',
-            command=self.calculate_bmi
+            # command=
         )
         cal_btn.grid(row=5, column=2)
-
-    def calculate_bmi(self):
-        kg = int(self.weight_tf.get())
-        m = int(self.height_tf.get()) / 100
-        bmi = kg / (m * m)
-        bmi = round(bmi, 1)
-
-        if bmi < 18.5:
-            messagebox.showinfo('bmi-pythonguides', f'ИМТ = {bmi} соответствует недостаточному весу')
-        elif (bmi > 18.5) and (bmi < 24.9):
-            messagebox.showinfo('bmi-pythonguides', f'ИМТ = {bmi} соответствует нормальному весу')
-        elif (bmi > 24.9) and (bmi < 29.9):
-            messagebox.showinfo('bmi-pythonguides', f'ИМТ = {bmi} соответствует избыточному весу')
-        else:
-            messagebox.showinfo('bmi-pythonguides', f'ИМТ = {bmi} соответствует ожирению')
-
 
 app = MainWindow()
 app.mainloop()
