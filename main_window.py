@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 
-from SystemCalculation import SystemCalculation
+from system_calculation import SystemCalculation
 
 
 # import SystemCalculation
