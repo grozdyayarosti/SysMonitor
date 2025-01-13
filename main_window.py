@@ -23,7 +23,10 @@ class MainWindow(tk.Tk):
         self.ram_label = None
         self.init_ram_value_label()
 
-        self.init_button()
+        self.rom_label = None
+        self.init_rom_value_label()
+
+        # self.init_button()
 
     def init_frame(self):
         self.frame = tk.Frame(
@@ -49,13 +52,21 @@ class MainWindow(tk.Tk):
         )
         self.ram_label.grid(row=4, column=1)
 
-    def init_button(self):
-        cal_btn = tk.Button(
+    def init_rom_value_label(self):
+        rom_value = SystemCalculation().get_rom()
+        self.ram_label = tk.Label(
             self.frame,
-            text='Рассчитать ИМТ',
-            # command=
+            text=f"ROM: {rom_value}"
         )
-        cal_btn.grid(row=5, column=2)
+        self.ram_label.grid(row=5, column=1)
+
+    # def init_button(self):
+    #     cal_btn = tk.Button(
+    #         self.frame,
+    #         text='Рассчитать ИМТ',
+    #         # command=
+    #     )
+    #     cal_btn.grid(row=5, column=2)
 
 app = MainWindow()
 app.mainloop()
